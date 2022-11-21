@@ -1,43 +1,43 @@
-namespace Class;
+namespace Characters;
 
 public abstract class Character
 {
-    protected int Attack
+    protected virtual int Attack
     {
         get { return Attack; }
         set { Attack = value; }
     }
-    protected int Defense
+    protected virtual int Defense
     {
         get { return Defense; }
         set { Defense = value; }
     }
-    protected int Initiative
+    protected virtual int Initiative
     {
         get { return Initiative; }
         set { Initiative = value; }
     }
-    protected int Damages
+    protected virtual int Damages
     {
         get { return Damages; }
         set { Damages = value; }
     }
-    protected int MaximumLife
+    protected virtual int MaximumLife
     {
         get { return MaximumLife; }
         set { MaximumLife = value; }
     }
-    protected int CurrentLife
+    protected virtual int CurrentLife
     {
         get { return CurrentLife; }
         set { CurrentLife = value; }
     }
-    protected int CurrentAttackNumber
+    protected virtual int CurrentAttackNumber
     {
         get { return CurrentAttackNumber; }
         set { CurrentAttackNumber = value; }
     }
-    protected int TotalAttackNumber
+    protected virtual int TotalAttackNumber
     {
         get { return TotalAttackNumber; }
         set { TotalAttackNumber = value; }
@@ -63,12 +63,15 @@ public abstract class Character
     }
 
     /// <summary>Check if the character is actually dead</summary>
-    protected bool IsDead() => CurrentLife > 0;
+    protected virtual bool IsDead() => CurrentLife > 0;
 
     /// <summary>Return the amount of the character</summary>
-    protected int Jet()
+    protected virtual int Jet()
     {
         Random rnd = new Random();
         return Attack + rnd.Next(1, 101);
     }
+
+    /// <summary>Return an integer who correspond to the amount of the attack on a character</summary>
+    protected virtual int MarginAttack(Character target) => target.Defense - Jet();
 }
