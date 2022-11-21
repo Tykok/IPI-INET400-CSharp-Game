@@ -1,8 +1,4 @@
 
-<p align="center">
-    Add somes badges (License, CI status, coverage, ...)
-</p>
-
 <!-- A spacer -->
 <p>&nbsp;</p>
 
@@ -11,7 +7,14 @@
 
 <h2 align="center">IPI CSharp Game TD (INET400)</h2>
 
-**Little description here to your [IPI CSharp Game TD (INET400)][projectLink]**
+**[IPI CSharp Game TD (INET400)][projectLink]** is a TD realized in group of 3 people at the IPI School.
+
+The objectives are to :
+
+1. Make a textual game (in the CLI)
+2. Use differents characters with specificity
+3. Use random in the game too choose who we can attack
+4. Make the program the more cleanest as possible
 
 ## Table of Contents
 
@@ -24,17 +27,17 @@
 
 ## Getting Started
 
-<!-- Explain how to start with this project -->
+If you want start the program, you should have a Dotnet SDK (version 6) installed on your laptop.
 
-**Install ...**
-
-**Run ...**
-
-**Use globally ...**
+> You can launch it with [Visual Studio](https://visualstudio.microsoft.com/fr/) instead.
 
 ## Running from command line
 
-<!-- Explain here how to run the project from the CLI -->
+To run this program, you just need do go at the root of the project and use this command :
+
+```shell
+dotnet run
+```
 
 ## Additional Configuration
 
@@ -45,11 +48,6 @@
 ## Documentation
 
 Learn more about using [IPI CSharp Game TD (INET400)][projectLink]
-
-- [Getting Started][DocStartedLink]
-- [Guides][DocGuideLink]
-- [API Reference][DocAPILink]
-- [Configuring][DocConfiguringLink]
 
 
 [projectLink]: Title
