@@ -9,9 +9,9 @@
 <!-- Add your image here -->
 <p align="center"><img src="" width="80%"/></p>
 
-<h2 align="center">__project</h2>
+<h2 align="center">IPI CSharp Game TD (INET400)</h2>
 
-**Little description here to your [__project][projectLink]**
+**Little description here to your [IPI CSharp Game TD (INET400)][projectLink]**
 
 ## Table of Contents
 
@@ -21,11 +21,6 @@
 - [Additional Configuration](#additional-configuration)
   - [Basic Configuration](#basic-configuration)
 - [Documentation](#documentation)
-- [Contributing](#contributing)
-  - [Code of Conduct](#code-of-conduct)
-  - [Contributing Guide](#contributing-guide)
-- [Credits](#credits)
-- [License](#license)
 
 ## Getting Started
 
@@ -49,33 +44,12 @@
 
 ## Documentation
 
-Learn more about using [__project][projectLink]
+Learn more about using [IPI CSharp Game TD (INET400)][projectLink]
 
 - [Getting Started][DocStartedLink]
 - [Guides][DocGuideLink]
 - [API Reference][DocAPILink]
 - [Configuring][DocConfiguringLink]
-
-
-## Contributing
-
-Development happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving this __project.
-
-### [Code of Conduct][codeOfCondutLink]
-
-We adopted a Code of Conduct that we expect __project participants to adhere to. Please read [the full text][codeOfCondutLink] so that you can understand what actions will and will not be tolerated.
-
-### [Contributing Guide][contributingLink]
-
-Read our [contributing guide][contributingLink] to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to our __project.
-
-## Credits
-
-__project exists thanks to all the people who [contribute][contributingLink].
-
-## License
-
-__project is [MIT licensed][licenseLink].
 
 
 [projectLink]: Title
