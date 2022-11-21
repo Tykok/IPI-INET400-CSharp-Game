@@ -1,8 +1,8 @@
-namespace Class;
+namespace Characters;
 
-public class Gardien : Character
+public class Zombie : Character
 {
-    public Gardien(int Attack,
+    public Zombie(int Attack,
                     int Defense,
                     int Initiative,
                     int Damages,

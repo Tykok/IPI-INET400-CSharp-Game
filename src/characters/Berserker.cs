@@ -1,4 +1,4 @@
-namespace Class;
+namespace Characters;
 
 public class Berserker : Character
 {

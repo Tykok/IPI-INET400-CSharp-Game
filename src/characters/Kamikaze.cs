@@ -1,8 +1,8 @@
-namespace Class;
+namespace Characters;
 
-public class Robot : Character
+public class Kamikaze : Character
 {
-    public Robot(int Attack,
+    public Kamikaze(int Attack,
                     int Defense,
                     int Initiative,
                     int Damages,

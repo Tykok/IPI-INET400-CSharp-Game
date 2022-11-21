@@ -1,8 +1,8 @@
-namespace Class;
+namespace Characters;
 
-public class Vampire : Character
+public class Pretre : Character
 {
-    public Vampire(int Attack,
+    public Pretre(int Attack,
                     int Defense,
                     int Initiative,
                     int Damages,
