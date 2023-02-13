@@ -1,7 +1,7 @@
 namespace Utils;
 using Characters;
 
-public static class UtilsChara
+public static class UtilsCharacters
 {
 
     /// <summary>Ask for a number of character by team</summary>
@@ -29,5 +29,21 @@ public static class UtilsChara
         List<Character> ListOfCharacter = new List<Character>();
         // Ask to the user the character he wants
         return ListOfCharacter;
+    }
+
+    public static bool checkSomebodyAlive(List<Character> team) {
+        for(int i = 0; i < team.Count; i++)
+            if(!team[i].IsDead()) 
+                return true;
+        return false;
+    }
+
+    /// <summary>
+    ///  Return a random index of a list to choose a character to attack
+    /// </summary>
+    public static int getRandomIndex(List<Character> team)
+    {
+        Random rnd = new Random();
+        return rnd.Next(1, team.Count);
     }
 }

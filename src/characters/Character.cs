@@ -43,6 +43,12 @@ public abstract class Character
         set { TotalAttackNumber = value; }
     }
 
+    public virtual bool AffectedByPain
+    {
+        get { return AffectedByPain; }
+        set { AffectedByPain = value; }
+    }
+
     protected Character(int Attack,
                     int Defense,
                     int Initiative,
@@ -68,10 +74,25 @@ public abstract class Character
     /// <summary>Return the amount of the character</summary>
     public virtual int Jet()
     {
-        Random rnd = new Random();
-        return Attack + rnd.Next(1, 101);
+        if (AffectedByPain){
+            return 0;
+        }else{
+            Random rnd = new Random();
+            return Attack + rnd.Next(1, 101);
+        }
     }
 
     /// <summary>Return an integer who correspond to the amount of the attack on a character</summary>
     public virtual int MarginAttack(Character target) => target.Defense - Jet();
+
+    public virtual void AttackCharacter(Character target)
+    {
+        target.CurrentLife -= Jet() - target.Defense;
+    }
+
+    /// <summary>Return a string who describe the character</summary>
+    public virtual string ToString()
+    {
+        return "Attack: " + Attack + " Defense: " + Defense + " Initiative: " + Initiative + " Damages: " + Damages + " MaximumLife: " + MaximumLife + " CurrentLife: " + CurrentLife + " CurrentAttackNumber: " + CurrentAttackNumber + " TotalAttackNumber: " + TotalAttackNumber;
+    }
 }
