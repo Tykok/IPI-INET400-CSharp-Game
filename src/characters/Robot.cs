@@ -1,4 +1,4 @@
-namespace Characters;
+using Characters;
 
 public class Robot : Character
 {

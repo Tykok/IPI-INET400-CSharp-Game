@@ -12,4 +12,8 @@
     <Compile Remove="src\function\assembly.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Figgle" Version="0.5.1" />
+  </ItemGroup>
+
 </Project>
