@@ -9,9 +9,9 @@ namespace Main
         {
             
             // Instanciate two list of characters
-            List<Character> TeamA = new List<Character>() { new Berserker(), new Vampire(), new Zombie(), new Gardien(), new Guerrier() };
-            List<Character> TeamB = new List<Character>() { new Goule(), new Kamikaze(), new Liche(), new Pretre(), new Robot() };
-            List<Character> CopyTeamA = new List<Character>();
+            var TeamA = new List<Character>() { new Berserker(), new Vampire(), new Zombie(), new Gardien(), new Guerrier() };
+            var TeamB = new List<Character>() { new Goule(), new Kamikaze(), new Liche(), new Pretre(), new Robot() };
+            var CopyTeamA = new List<Character>();
             
             // Make initiave Jet
             var JetInitiativeA = TeamA[UtilsCharacters.getRandomIndex(TeamA)].Jet();

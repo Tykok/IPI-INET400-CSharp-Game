@@ -6,4 +6,15 @@ public class Berserker : Character
     {
     }
     
+    public int CurrentLife
+    {
+        get { return CurrentLife; }
+        set
+        {
+            if (CurrentLife < MaximumLife / 2)
+                CurrentAttackNumber = 4;
+            CurrentLife = value;
+        }
+    }
+    
 }
