@@ -1,7 +1,12 @@
+using Main.enumeration;
 namespace Characters;
 
 public class Vampire : Character
 {
+    
+    public CharacterType CharacterType = CharacterType.UNHOLY;
+    public static bool AffectedByPain = false;
+    
     public Vampire() : base(100, 100, 120, 50, 300, 2, 2)
     {
     }

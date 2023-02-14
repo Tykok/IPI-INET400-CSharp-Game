@@ -2,6 +2,8 @@ namespace Characters;
 
 public class Goule : Character
 {
+    
+    // TODO Ajouter la mécanique de "Charognard"
     public Goule() : base(50, 80, 120, 30, 250,  5, 5)
     {
     }
