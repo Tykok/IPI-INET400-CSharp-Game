@@ -100,4 +100,41 @@ public abstract class Character
                " MaximumLife: " + MaximumLife + " CurrentLife: " + CurrentLife + " CurrentAttackNumber: " +
                CurrentAttackNumber + " TotalAttackNumber: " + TotalAttackNumber;
     }
+    
+    /// <summary>
+    /// Return an Integer who indicate the attack margin on the target.
+    /// This Integer can be negative if the target can counter the attack, or positive if the attack is successful.
+    /// </summary>
+    public virtual int AttackSomeone(Character target)
+    {
+        
+        // Make two Jet for attack and defense
+        var attackLevel = JetAttack();
+        var targetDefense = target.JetDefense();
+        var attackMargin = attackLevel - targetDefense;
+        
+        // Check if the target can counter
+        if (targetDefense > attackLevel)
+        {
+            CounterDamage(target, attackMargin * -1);
+            return attackMargin;
+        }
+        
+        MakeDamage(target, attackMargin);
+        return attackMargin;
+    }
+
+    /// <summary>Used to make damage to another character</summary>
+    protected virtual void MakeDamage(Character target, int attackMargin)
+    {
+        target.CurrentLife -= attackMargin;
+        target.CurrentAttackNumber--;
+    }
+    
+    /// <summary>Used to make counter damage to another character</summary>
+    protected virtual void CounterDamage(Character target, int attackMargin)
+    {
+        CurrentLife -= attackMargin;
+        target.CurrentAttackNumber--;
+    }
 }
