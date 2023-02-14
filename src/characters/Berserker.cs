@@ -3,15 +3,15 @@ namespace Characters;
 public class Berserker : Character
 {
 
-    public bool AffectedByPain = false;
+    public static bool AffectedByPain = false;
     
     public Berserker() : base(100, 100, 80, 20, 300, 1, 1)
     {
     }
     
-    public int CurrentLife
+    private int CurrentLife
     {
-        get { return CurrentLife; }
+        get => base.CurrentLife;
         set
         {
             if (CurrentLife < MaximumLife / 2)
@@ -20,9 +20,11 @@ public class Berserker : Character
         }
     }
     
-    public override int Jet()
+    
+    
+    public override int JetAttack()
     {
-        var BaseJet = base.Jet();
+        var BaseJet = base.JetAttack();
         return BaseJet + (MaximumLife - CurrentLife);
     }
 }

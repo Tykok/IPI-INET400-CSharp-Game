@@ -7,8 +7,8 @@ public class Guerrier : Character
     }
 
     public override int JetAttack() {
-        if (AffectedByPain) {
-            AffectedByPain = false;
+        if (CurrentlyAffectedByPain) {
+            CurrentlyAffectedByPain = false;
             return 0;
         }
         return base.JetAttack();

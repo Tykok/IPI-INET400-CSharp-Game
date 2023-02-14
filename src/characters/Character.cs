@@ -6,7 +6,8 @@ public abstract class Character
 
     public static CharacterType CharacterType = CharacterType.NORMAL;
     public static CharacterAttackType CharacterAttackType = CharacterAttackType.NORMAL;
-    
+    public static bool AffectedByPain = true;
+
     public int Attack;
     public int Defense;
     public int Initiative;
@@ -28,11 +29,11 @@ public abstract class Character
     /// Define the total number of attack the character can do
     /// </summary>
     public int TotalAttackNumber;
-    
+
     /// <summary>
-    /// Boolean who indicate if the character is affected by pain
+    /// Boolean who indicate if the character is currently affected by pain
     /// </summary>
-    public bool AffectedByPain;
+    public bool CurrentlyAffectedByPain;
 
     protected Character(int Attack,
         int Defense,
@@ -60,8 +61,8 @@ public abstract class Character
     {
         if (CurrentAttackNumber == 0)
             throw new Exception("The character can't attack anymore");
-
-        if (AffectedByPain)
+        
+        if (CurrentlyAffectedByPain)
             throw new Exception("The character is affected by pain");
 
         Random rnd = new Random();
