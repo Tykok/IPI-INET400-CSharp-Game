@@ -8,6 +8,8 @@ namespace IPI_INET400_CSharp_Game
     {
         static void Main(string[] args)
         {
+            var pr = new Program();
+            
             Console.WriteLine(FiggleFonts.Ogre.Render("Console Battle"));
             Console.WriteLine("Veuillez sélectionner un mode de jeu...");
             Console.WriteLine("Duel(tapez d) | Battle Royal (tapez b)");
@@ -17,23 +19,27 @@ namespace IPI_INET400_CSharp_Game
             {
                 Console.WriteLine("========== DUEL ==========");
 
-                Character walle = new Robot();
-                Character momo = new Kamikaze();
+                Character robot = new Robot();
+                Character kamikaze = new Kamikaze();
 
-                var jetWalle = walle.JetAttack();
-                var jetMomo = momo.JetAttack();
+                var jetAttackRobot = robot.JetAttack();
+                var jetDefenseRobot = robot.JetDefense();
+                var jetAttackKamikaze = kamikaze.JetAttack();
+                var jetDefenseKamikaze = kamikaze.JetDefense();
 
-                Console.WriteLine("Jet d'intiative Wall-E: " + walle.Attack + " + " + (jetWalle - walle.Attack) + " = " + jetWalle);
-                Console.WriteLine("Jet d'intiative Momo: " + momo.Attack + " + " + (jetMomo - momo.Attack) + " = " + jetMomo);
-                Console.WriteLine("Marge d'attaque: " + (walle.Attack + jetWalle) + " - " + (momo.Attack + jetMomo) +
-                                  " = " + ((walle.Attack + jetWalle) - (momo.Attack + jetMomo)));
-
-                if (walle.Attack + jetWalle > momo.Attack + jetMomo)
+                Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + + robot.Attack + " + " + (jetAttackRobot - robot.Attack) + " = " + jetAttackRobot);
+                Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack + " + " + (jetAttackKamikaze - kamikaze.Attack) + " = " + jetAttackKamikaze + "\n");
+            
+                if (jetAttackRobot > jetAttackKamikaze)
                 {
-                    Console.WriteLine("Walle attaque Momo!");
-                    
+                    Console.WriteLine("Robot attaque Kamikaze!");
+                    pr.margeAttack(jetAttackRobot - jetDefenseKamikaze, jetAttackRobot, kamikaze);
                 }
-                
+                else if (jetAttackRobot < jetAttackKamikaze)
+                {
+                    Console.WriteLine("Kamikaze attaque Robot!");
+                    pr.margeAttack(jetAttackKamikaze - jetDefenseRobot, jetAttackKamikaze, robot);
+                }
             }
             else if (mode == "b")
             {
@@ -104,6 +110,27 @@ namespace IPI_INET400_CSharp_Game
             {
                 Console.WriteLine("Fin");
             }
+        }
+        
+        private void margeAttack(int marge, int jetChAttacking, Character chAttacked)
+        {
+            if (marge > 0)
+            {
+                chAttacked.CurrentLife -= marge * jetChAttacking / 100;
+                Console.WriteLine("💥Marge d'attaque: " + marge);
+                Console.WriteLine("🩸Dégats subis par " + chAttacked.GetType().Name + ": " + marge * jetChAttacking / 100);
+                getStats(chAttacked);
+            }
+            else
+            {
+                
+            }
+        }
+
+        private void getStats(Character character)
+        {
+            Console.WriteLine("📊Stats " + character.GetType().Name + " :");
+            Console.WriteLine("🫀" + character.CurrentLife);
         }
     }
 }
