@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Main.enumeration;
 namespace Characters;
 
@@ -83,10 +84,9 @@ public abstract class Character
     {
         target.CurrentLife -= JetAttack() - target.Defense;
     }
+    
 
-
-    public virtual void ResetRound()
-    {
+    public virtual void StartRound() {
         if (CurrentLife <= 0)
             return;
         

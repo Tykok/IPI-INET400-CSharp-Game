@@ -7,4 +7,12 @@ public class Robot : Character
     }
 
     public override int Jet() => 50;
+
+    public override void StartRound()
+    {
+        base.StartRound();
+        
+        // The robot increase this attack by 50%
+        Attack += (int) (Attack * 0.5);
+    }
 }
