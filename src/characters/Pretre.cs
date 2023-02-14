@@ -11,11 +11,13 @@ public class Pretre : Character
     }
 
 
-    public override void ResetRound()
+    public override void StartRound()
     {
-        base.ResetRound();
+        base.StartRound();
+
+        var heal = (int)(MaximumLife * 0.1);
         
         // If the priest is still alive, he will heal himself by 10% of his maximum life
-        CurrentLife+= Convert.ToInt32(MaximumLife * 0.1);
+        CurrentLife = heal + CurrentLife > MaximumLife ? MaximumLife : CurrentLife + heal;
     }
 }

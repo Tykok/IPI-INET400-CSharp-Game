@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Main.enumeration;
 namespace Characters;
 
@@ -56,6 +57,9 @@ public abstract class Character
     /// <summary>Check if the character is actually dead</summary>
     public virtual bool IsDead() => CurrentLife > 0;
 
+
+    public virtual int Jet() => new Random().Next(1, 101);
+    
     /// <summary>Return the amount of the character</summary>
     public virtual int JetAttack()
     {
@@ -64,16 +68,13 @@ public abstract class Character
         
         if (CurrentlyAffectedByPain)
             throw new Exception("The character is affected by pain");
-
-        Random rnd = new Random();
-        return Attack + rnd.Next(1, 101);
+        return Attack + Jet();
     }
     
     /// <summary>Return the amount of the character</summary>
     public virtual int JetDefense()
     {
-        Random rnd = new Random();
-        return Defense + rnd.Next(1, 101);
+        return Defense + Jet();
     }
 
     /// <summary>Return an integer who correspond to the amount of the attack on a character</summary>
@@ -83,10 +84,9 @@ public abstract class Character
     {
         target.CurrentLife -= JetAttack() - target.Defense;
     }
+    
 
-
-    public virtual void ResetRound()
-    {
+    public virtual void StartRound() {
         if (CurrentLife <= 0)
             return;
         
