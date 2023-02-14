@@ -3,5 +3,6 @@
 public enum CharacterAttackType
 {
     BLESSED,
-    CURSED
+    CURSED,
+    NORMAL
 }

@@ -3,5 +3,6 @@
 public enum CharacterType
 {
     SACRED,
-    UNHOLY
+    UNHOLY,
+    NORMAL
 }

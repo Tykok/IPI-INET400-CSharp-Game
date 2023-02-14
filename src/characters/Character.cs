@@ -1,7 +1,12 @@
+using Main.enumeration;
 namespace Characters;
 
 public abstract class Character
 {
+
+    public static CharacterType CharacterType = CharacterType.NORMAL;
+    public static CharacterAttackType CharacterAttackType = CharacterAttackType.NORMAL;
+    
     public int Attack;
     public int Defense;
     public int Initiative;
@@ -78,6 +83,15 @@ public abstract class Character
         target.CurrentLife -= JetAttack() - target.Defense;
     }
 
+
+    public virtual void ResetRound()
+    {
+        if (CurrentLife <= 0)
+            return;
+        
+        CurrentAttackNumber = TotalAttackNumber;
+    }
+    
     /// <summary>Return a string who describe the character</summary>
     public virtual string ToString()
     {
