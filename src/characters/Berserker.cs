@@ -20,8 +20,6 @@ public class Berserker : Character
         }
     }
     
-    
-    
     public override int JetAttack()
     {
         var BaseJet = base.JetAttack();

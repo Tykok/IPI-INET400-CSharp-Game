@@ -3,8 +3,10 @@ using Main.enumeration;
 
 public class Pretre : Character
 {
+    
+    // TODO Cible en priorité les personnages de type UNHOLY
+    
     public CharacterType CharacterType = CharacterType.SACRED;
-    public CharacterAttackType CharacterAttackType = CharacterAttackType.BLESSED;
 
     public Pretre() : base(75, 125, 50, 50, 150,  1, 1)
     {
