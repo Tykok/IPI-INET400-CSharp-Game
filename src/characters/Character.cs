@@ -1,14 +1,14 @@
-using System.Reflection.Metadata.Ecma335;
 using Main.enumeration;
 namespace Characters;
 
 public abstract class Character
 {
 
-    public static CharacterType CharacterType = CharacterType.NORMAL;
-    public static CharacterAttackType CharacterAttackType = CharacterAttackType.NORMAL;
     public static bool AffectedByPain = true;
 
+
+    public CharacterAttackType CharacterAttackType = CharacterAttackType.NORMAL;
+    public CharacterType CharacterType = CharacterType.NORMAL;
     public int Attack;
     public int Defense;
     public int Initiative;
@@ -127,14 +127,30 @@ public abstract class Character
     /// <summary>Used to make damage to another character</summary>
     protected virtual void MakeDamage(Character target, int attackMargin)
     {
-        target.CurrentLife -= attackMargin;
-        target.CurrentAttackNumber--;
+        target.CurrentLife -= Weakness(target, attackMargin / 100);
+        CurrentAttackNumber--;
     }
     
     /// <summary>Used to make counter damage to another character</summary>
     protected virtual void CounterDamage(Character target, int attackMargin)
     {
-        CurrentLife -= attackMargin;
+        CurrentLife -= Weakness(this, attackMargin);
+        CurrentAttackNumber--;
         target.CurrentAttackNumber--;
+    }
+
+    /// <summary>Double or not the damage given to the target</summary>
+    private int Weakness(Character target, int attackMargin)
+    {
+        if(target.CharacterType == CharacterType.NORMAL || CharacterAttackType == CharacterAttackType.NORMAL)
+            return attackMargin;
+        
+        if(target.CharacterType == CharacterType.SACRED && CharacterAttackType == CharacterAttackType.CURSED)
+            return attackMargin * 2;
+        
+        if(target.CharacterType == CharacterType.UNHOLY && CharacterAttackType == CharacterAttackType.BLESSED)
+            return attackMargin * 2;
+
+        return attackMargin;
     }
 }
