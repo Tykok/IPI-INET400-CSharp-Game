@@ -53,7 +53,6 @@ public abstract class Character
                     int Defense,
                     int Initiative,
                     int Damages,
-                    int MaximumLife,
                     int CurrentLife,
                     int CurrentAttackNumber,
                     int TotalAttackNumber)
@@ -62,7 +61,7 @@ public abstract class Character
         this.Defense = Defense;
         this.Initiative = Initiative;
         this.Damages = Damages;
-        this.MaximumLife = MaximumLife;
+        this.MaximumLife = CurrentLife;
         this.CurrentLife = CurrentLife;
         this.CurrentAttackNumber = CurrentAttackNumber;
         this.TotalAttackNumber = TotalAttackNumber;
@@ -74,13 +73,15 @@ public abstract class Character
     /// <summary>Return the amount of the character</summary>
     public virtual int Jet()
     {
-        if (AffectedByPain){
-            return 0;
-        }else{
-            Random rnd = new Random();
-            return Attack + rnd.Next(1, 101);
+        if (CurrentAttackNumber == 0)
+            throw new Exception("The character can't attack anymore");
+        
+        if (AffectedByPain)
+            throw new Exception("The character is affected by pain");
+        
+        Random rnd = new Random();
+        return Attack + rnd.Next(1, 101);
         }
-    }
 
     /// <summary>Return an integer who correspond to the amount of the attack on a character</summary>
     public virtual int MarginAttack(Character target) => target.Defense - Jet();
