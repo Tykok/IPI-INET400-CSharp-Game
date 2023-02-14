@@ -2,52 +2,15 @@ namespace Characters;
 
 public abstract class Character
 {
-    public virtual int Attack
-    {
-        get { return Attack; }
-        set { Attack = value; }
-    }
-    public virtual int Defense
-    {
-        get { return Defense; }
-        set { Defense = value; }
-    }
-    public virtual int Initiative
-    {
-        get { return Initiative; }
-        set { Initiative = value; }
-    }
-    public virtual int Damages
-    {
-        get { return Damages; }
-        set { Damages = value; }
-    }
-    public virtual int MaximumLife
-    {
-        get { return MaximumLife; }
-        set { MaximumLife = value; }
-    }
-    public virtual int CurrentLife
-    {
-        get { return CurrentLife; }
-        set { CurrentLife = value; }
-    }
-    public virtual int CurrentAttackNumber
-    {
-        get { return CurrentAttackNumber; }
-        set { CurrentAttackNumber = value; }
-    }
-    public virtual int TotalAttackNumber
-    {
-        get { return TotalAttackNumber; }
-        set { TotalAttackNumber = value; }
-    }
-
-    public virtual bool AffectedByPain
-    {
-        get { return AffectedByPain; }
-        set { AffectedByPain = value; }
-    }
+    public int Attack;
+    public int Defense;
+    public int Initiative;
+    public int Damages;
+    public int MaximumLife;
+    public int CurrentLife;
+    public int CurrentAttackNumber;
+    public int TotalAttackNumber;
+    public bool AffectedByPain;
 
     protected Character(int Attack,
                     int Defense,
