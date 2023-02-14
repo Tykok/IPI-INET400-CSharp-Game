@@ -7,9 +7,26 @@ public abstract class Character
     public int Initiative;
     public int Damages;
     public int MaximumLife;
+    
+    
+    /// <summary>
+    /// The current life of the character of the current round
+    /// </summary>
     public int CurrentLife;
+    
+    /// <summary>
+    /// Define the number of attack of the current round
+    /// </summary>
     public int CurrentAttackNumber;
+    
+    /// <summary>
+    /// Define the total number of attack the character can do
+    /// </summary>
     public int TotalAttackNumber;
+    
+    /// <summary>
+    /// Boolean who indicate if the character is affected by pain
+    /// </summary>
     public bool AffectedByPain;
 
     protected Character(int Attack,
