@@ -140,7 +140,7 @@ public abstract class Character
     }
 
     /// <summary>Double or not the damage given to the target</summary>
-    private int Weakness(Character target, int attackMargin)
+    protected int Weakness(Character target, int attackMargin)
     {
         if(target.CharacterType == CharacterType.NORMAL || CharacterAttackType == CharacterAttackType.NORMAL)
             return attackMargin;
