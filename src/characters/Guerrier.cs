@@ -6,11 +6,11 @@ public class Guerrier : Character
     {
     }
 
-    public override int Jet() {
+    public override int JetAttack() {
         if (AffectedByPain) {
             AffectedByPain = false;
             return 0;
         }
-        return base.Jet();
+        return base.JetAttack();
     }
 }

@@ -16,15 +16,27 @@ namespace IPI_INET400_CSharp_Game
             if (mode == "d")
             {
                 Console.WriteLine("========== DUEL ==========");
-                var walle = new Robot();
-                var momo = new Kamikaze();
-                Console.WriteLine("Jet d'intiative Wall-E: " + walle.Attack + " + " + walle.Jet() + " = " +
-                              (walle.Attack + walle.Jet()));
-                Console.WriteLine("Jet d'intiative Momo: " + momo.Attack + " + " + momo.Jet() + " = " +
-                                  (momo.Attack + momo.Jet()));
-                Console.WriteLine("Marge d'attaque: ");
+
+                Character walle = new Robot();
+                Character momo = new Kamikaze();
+
+                var jetWalle = walle.JetAttack();
+                var jetMomo = momo.JetAttack();
+
+                Console.WriteLine("Jet d'intiative Wall-E: " + walle.Attack + " + " + (jetWalle - walle.Attack) + " = " + jetWalle);
+                Console.WriteLine("Jet d'intiative Momo: " + momo.Attack + " + " + (jetMomo - momo.Attack) + " = " + jetMomo);
+                Console.WriteLine("Marge d'attaque: " + (walle.Attack + jetWalle) + " - " + (momo.Attack + jetMomo) +
+                                  " = " + ((walle.Attack + jetWalle) - (momo.Attack + jetMomo)));
+
+                if (walle.Attack + jetWalle > momo.Attack + jetMomo)
+                {
+                    Console.WriteLine("Walle attaque Momo!");
+                    
+                }
+                
             }
-            else if (mode == "b") {
+            else if (mode == "b")
+            {
                 Console.WriteLine("========== BATTLE ROYAL ==========");
                 // Instanciate two list of characters
                 List<Character> TeamA = new List<Character>()
@@ -46,8 +58,8 @@ namespace IPI_INET400_CSharp_Game
                 List<Character> CopyTeamA = new List<Character>();
 
                 // Make initiave Jet
-                var JetInitiativeA = TeamA[UtilsCharacters.getRandomIndex(TeamA)].Jet();
-                var JetInitiativeB = TeamB[UtilsCharacters.getRandomIndex(TeamB)].Jet();
+                var JetInitiativeA = TeamA[UtilsCharacters.getRandomIndex(TeamA)].JetAttack();
+                var JetInitiativeB = TeamB[UtilsCharacters.getRandomIndex(TeamB)].JetAttack();
 
                 if (JetInitiativeA > JetInitiativeB)
                 {
