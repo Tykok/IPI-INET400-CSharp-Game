@@ -8,8 +8,6 @@ namespace IPI_INET400_CSharp_Game
     {
         static void Main(string[] args)
         {
-            var pr = new Program();
-            
             Console.WriteLine(FiggleFonts.Ogre.Render("Console Battle"));
             Console.WriteLine("Veuillez sélectionner un mode de jeu...");
             Console.WriteLine("Duel(tapez d) | Battle Royal (tapez b)");
@@ -19,26 +17,50 @@ namespace IPI_INET400_CSharp_Game
             {
                 Console.WriteLine("========== DUEL ==========");
 
-                Character robot = new Robot();
-                Character kamikaze = new Kamikaze();
-
-                var jetAttackRobot = robot.JetAttack();
+                var robot = new Robot();
+                var kamikaze = new Kamikaze();
+                
+                Console.WriteLine("ROBOT CURRENT LIFE || " + robot.CurrentLife + " || " + robot.IsDead());
+                Console.WriteLine("KAMIKAZE CURRENT LIFE || " + kamikaze.CurrentLife + " || " + kamikaze.IsDead());
+                Console.WriteLine("CONDITION " + (!robot.IsDead() || !kamikaze.IsDead()));
+                
+                /*var jetAttackRobot = robot.JetAttack();
                 var jetDefenseRobot = robot.JetDefense();
                 var jetAttackKamikaze = kamikaze.JetAttack();
-                var jetDefenseKamikaze = kamikaze.JetDefense();
+                var jetDefenseKamikaze = kamikaze.JetDefense();*/
 
-                Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + + robot.Attack + " + " + (jetAttackRobot - robot.Attack) + " = " + jetAttackRobot);
-                Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack + " + " + (jetAttackKamikaze - kamikaze.Attack) + " = " + jetAttackKamikaze + "\n");
-            
-                if (jetAttackRobot > jetAttackKamikaze)
+                var i = 1;
+                while ( i < 3)
                 {
-                    Console.WriteLine("Robot attaque Kamikaze!");
-                    pr.margeAttack(jetAttackRobot - jetDefenseKamikaze, jetAttackRobot, kamikaze);
-                }
-                else if (jetAttackRobot < jetAttackKamikaze)
-                {
-                    Console.WriteLine("Kamikaze attaque Robot!");
-                    pr.margeAttack(jetAttackKamikaze - jetDefenseRobot, jetAttackKamikaze, robot);
+                    Console.WriteLine("********* ROUND " + i + " *********");
+                    robot.StartRound();
+                    kamikaze.StartRound();
+                    var jetInitiativeRobot = robot.JetAttack();
+                    var jetInitiativeKamikaze = kamikaze.JetAttack();
+                    if (robot.TotalAttackNumber > 0 || kamikaze.TotalAttackNumber > 0)
+                    {
+                        Console.WriteLine("ROBOT ATTACK : " + robot.Attack);
+                        Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " + (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
+                        Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack + " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " + jetInitiativeKamikaze + "\n");
+
+                        if (jetInitiativeRobot > jetInitiativeKamikaze)
+                        {
+                            Console.WriteLine(robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "."  + "\n");
+                            /*if (robot.MarginAttack(kamikaze) > 0)
+                            {
+                                robot.AttackSomeone(kamikaze);
+                            }*/
+                        }
+                        else
+                        {
+                            Console.WriteLine(kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "."  + "\n");
+                            if (kamikaze.MarginAttack(robot) > 0)
+                            {
+                                kamikaze.AttackSomeone(robot);
+                            }
+                        }
+                    }
+                    i++;
                 }
             }
             else if (mode == "b")
@@ -109,21 +131,6 @@ namespace IPI_INET400_CSharp_Game
             else
             {
                 Console.WriteLine("Fin");
-            }
-        }
-        
-        private void margeAttack(int marge, int jetChAttacking, Character chAttacked)
-        {
-            if (marge > 0)
-            {
-                chAttacked.CurrentLife -= marge * jetChAttacking / 100;
-                Console.WriteLine("💥Marge d'attaque: " + marge);
-                Console.WriteLine("🩸Dégats subis par " + chAttacked.GetType().Name + ": " + marge * jetChAttacking / 100);
-                getStats(chAttacked);
-            }
-            else
-            {
-                
             }
         }
 

@@ -55,7 +55,7 @@ public abstract class Character
     }
 
     /// <summary>Check if the character is actually dead</summary>
-    public virtual bool IsDead() => CurrentLife > 0;
+    public virtual bool IsDead() => CurrentLife <= 0;
 
 
     public virtual int Jet() => new Random().Next(1, 101);
@@ -110,7 +110,9 @@ public abstract class Character
         
         // Make two Jet for attack and defense
         var attackLevel = JetAttack();
+        Console.WriteLine(" jet d'Attaque de " + GetType().Name + ": " + (attackLevel - Attack) + " + " + Attack + " = " + attackLevel + "\n");
         var targetDefense = target.JetDefense();
+        Console.WriteLine(" jet de Defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense + "\n");
         var attackMargin = attackLevel - targetDefense;
         
         // Check if the target can counter
@@ -137,6 +139,9 @@ public abstract class Character
         CurrentLife -= Weakness(this, attackMargin);
         CurrentAttackNumber--;
         target.CurrentAttackNumber--;
+        Console.WriteLine("💥Marge d'attaque: " + attackMargin);
+        Console.WriteLine("💥🔁Bonus de contre-attaque: " + attackMargin * -1);
+        Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100);
     }
 
     /// <summary>Double or not the damage given to the target</summary>
