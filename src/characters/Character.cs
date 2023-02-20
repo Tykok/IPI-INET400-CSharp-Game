@@ -110,17 +110,17 @@ public abstract class Character
         
         // Make two Jet for attack and defense
         var attackLevel = JetAttack();
-        Console.WriteLine(" jet d'Attaque de " + GetType().Name + ": " + (attackLevel - Attack) + " + " + Attack + " = " + attackLevel + "\n");
+        Console.WriteLine("🗡️jet d'attaque de " + GetType().Name + ": " + (attackLevel - Attack) + " + " + Attack + " = " + attackLevel);
         var targetDefense = target.JetDefense();
-        Console.WriteLine(" jet de Defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense + "\n");
+        Console.WriteLine("🛡jet de defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense);
         var attackMargin = attackLevel - targetDefense;
         
-        Console.WriteLine("💥Marge d'attaque: " + attackMargin + "\n");
+        Console.WriteLine("Marge d'attaque: " + attackMargin + "\n");
         
         // Check if the target can counter
         if (attackMargin <= 0)
         {
-            Console.WriteLine(target.GetType().Name + " contre-attaque " + GetType().Name + "!" + "\n");
+            Console.WriteLine("💥🔁" + target.GetType().Name + " contre-attaque " + GetType().Name + "!" + "\n");
             CounterDamage(this, attackMargin * -1);
             return attackMargin;
         }
@@ -134,7 +134,7 @@ public abstract class Character
     {
         target.CurrentLife -= Weakness(target, attackMargin / 100);
         CurrentAttackNumber--;
-        Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100);
+        Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100 + "\n");
     }
     
     /// <summary>Used to make counter damage to another character</summary>
@@ -143,7 +143,7 @@ public abstract class Character
         CurrentLife -= Weakness(this, attackMargin);
         CurrentAttackNumber--;
         target.CurrentAttackNumber--;
-        Console.WriteLine("💥🔁Bonus de contre-attaque: " + attackMargin);
+        Console.WriteLine("🔥Bonus de contre-attaque: " + attackMargin);
         Console.WriteLine("🩸Dégats subis par " + GetType().Name + ": " + attackMargin);
     }
 

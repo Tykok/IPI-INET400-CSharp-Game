@@ -8,14 +8,14 @@ namespace IPI_INET400_CSharp_Game
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(FiggleFonts.Ogre.Render("Console Battle"));
+            Console.WriteLine(FiggleFonts.Slant.Render("Console Battle"));
             Console.WriteLine("Veuillez sélectionner un mode de jeu...");
-            Console.WriteLine("Duel(tapez d) | Battle Royal (tapez b)");
+            Console.WriteLine("Duel (tapez d) | Battle Royal (tapez b)");
             string mode = new string(Console.ReadLine());
 
             if (mode == "d")
             {
-                Console.WriteLine("========== DUEL ==========");
+                Console.WriteLine(FiggleFonts.Slant.Render("DUEL"));
 
                 var robot = new Robot();
                 var kamikaze = new Kamikaze();
@@ -23,43 +23,41 @@ namespace IPI_INET400_CSharp_Game
                 var i = 1;
                 while (!robot.IsDead() && !kamikaze.IsDead())
                 {
-                    Console.WriteLine("********* ROUND " + i + " *********");
+                    Console.WriteLine("***************************************");
+                    Console.WriteLine("*************** ROUND " + i + " ***************");
+                    Console.WriteLine("***************************************");
                     robot.StartRound();
                     kamikaze.StartRound();
                     var jetInitiativeRobot = robot.JetAttack();
                     var jetInitiativeKamikaze = kamikaze.JetAttack();
                     if (robot.TotalAttackNumber > 0 || kamikaze.TotalAttackNumber > 0)
                     {
-                        Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " +
+                        Console.WriteLine("▶️Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " +
                                           (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
-                        Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack +
+                        Console.WriteLine("▶️Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack +
                                           " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " +
                                           jetInitiativeKamikaze + "\n");
 
                         if (jetInitiativeRobot > jetInitiativeKamikaze)
                         {
-                            Console.WriteLine(robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "." +
-                                              "\n");
+                            Console.WriteLine("💥" + robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "." + "\n");
                             robot.AttackSomeone(kamikaze);
                         }
                         else
                         {
-                            Console.WriteLine(kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "." +
-                                              "\n");
+                            Console.WriteLine("💥" + kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "." + "\n");
                             kamikaze.AttackSomeone(robot);
                         }
                         
-                        
                         Console.WriteLine("🫀Robot: " + (robot.CurrentLife >= 0 ? robot.CurrentLife : 0));
-                        Console.WriteLine("🫀Kamikaze: " + (kamikaze.CurrentLife >= 0 ? kamikaze.CurrentLife : 0));
+                        Console.WriteLine("🫀Kamikaze: " + (kamikaze.CurrentLife >= 0 ? kamikaze.CurrentLife : 0) + "\n");
                     }
-
                     i++;
                 }
             }
             else if (mode == "b")
             {
-                Console.WriteLine("========== BATTLE ROYAL ==========");
+                Console.WriteLine(FiggleFonts.Slant.Render("BATTLE ROYAL"));
                 // Instanciate two list of characters
                 List<Character> TeamA = new List<Character>()
                 {
