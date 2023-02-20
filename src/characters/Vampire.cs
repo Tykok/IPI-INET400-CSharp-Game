@@ -1,16 +1,16 @@
 using Main.enumeration;
+
 namespace Characters;
 
-public class Vampire : Character
+public class Vampire : Character, MortVivant
 {
-    
+    public bool AffectedByPain = false;
+
     public CharacterType CharacterType = CharacterType.UNHOLY;
-    public static bool AffectedByPain = false;
-    
-    public Vampire() : base(100, 100, 120, 50, 300, 2, 2)
+
+    public Vampire() : base(100, 100, 120, 50, 300, 2)
     {
     }
-    
 
     protected override void MakeDamage(Character target, int attackMargin)
     {
@@ -19,17 +19,17 @@ public class Vampire : Character
     }
 
     private void Heal()
-    {   
-         int maxLife = MaximumLife;
-        
-         if (CurrentLife < MaximumLife)
-         
-               
-                CurrentLife = (base.JetAttack() - base.JetDefense()) / 2;
-                if(CurrentLife > MaximumLife)
-                {
-                    CurrentLife = maxLife;
-                }
-    }
+    {
+        var maxLife = MaximumLife;
 
+        if (CurrentLife < MaximumLife)
+        {
+            CurrentLife = (base.JetAttack() - base.JetDefense()) / 2;
+        }
+
+        if (CurrentLife > MaximumLife)
+        {
+            CurrentLife = maxLife;
+        }
+    }
 }

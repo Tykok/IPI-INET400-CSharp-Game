@@ -2,17 +2,26 @@
 <!-- A spacer -->
 <p>&nbsp;</p>
 
-<!-- Add your image here -->
-<p align="center"><img src="" width="80%"/></p>
-
 <h2 align="center">IPI CSharp Game TD (INET400)</h2>
 
-**[IPI CSharp Game TD (INET400)][projectLink]** is a TD realized in group of 3 people at the IPI School.
+<div align="center">
+
+![Image of project](./static/project.png)
+
+</div>
+
+**[IPI CSharp Game TD (INET400)][projectLink]** is a TD realized in group of 3 people at the IPI School :
+
+- [fscript98](https://github.com/fscript98)
+- [nharribou](https://github.com/nharribou)
+- [Tykok](https://github.com/Tykok)
+
+---
 
 The objectives are to :
 
 1. Make a textual game (in the CLI)
-2. Use differents characters with specificity
+2. Use different characters with specificity
 3. Use random in the game too choose who we can attack
 4. Make the program the more cleanest as possible
 
@@ -21,9 +30,6 @@ The objectives are to :
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
 - [Running from command line](#running-from-command-line)
-- [Additional Configuration](#additional-configuration)
-  - [Basic Configuration](#basic-configuration)
-- [Documentation](#documentation)
 
 ## Getting Started
 
@@ -39,22 +45,11 @@ To run this program, you just need do go at the root of the project and use this
 dotnet run
 ```
 
-## Additional Configuration
-
-### Basic Configuration
-
-<!-- Basic configuration of the project (.env / yarn commands / ...)-->
+Or you can simply use [Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/fr/) to run the program.
 
 ## Documentation
 
 Learn more about using [IPI CSharp Game TD (INET400)][projectLink]
 
 
-[projectLink]: Title
-[licenseLink]: https://opensource.org/licenses/MIT
-[contributingLink]: ./CONTRIBUTING.md
-[codeOfCondutLink]: ./CODE_OF_CONDUCT.md
-[DocAPILink]: .
-[DocConfiguringLink]: .
-[DocGuideLink]: .
-[DocStartedLink]: .
+[projectLink]: https://github.com/Tykok/IPI-INET400-CSharp-Game

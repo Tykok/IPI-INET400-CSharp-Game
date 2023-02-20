@@ -1,135 +1,56 @@
 ﻿using Characters;
-using Figgle;
-using Utils;
+using Function;
 
-namespace IPI_INET400_CSharp_Game
-{
-    class Program
+namespace IPI_INET400_CSharp_Game;
+class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(FiggleFonts.Slant.Render("Console Battle"));
-            Console.WriteLine("Veuillez sélectionner un mode de jeu...");
-            Console.WriteLine("Duel (tapez d) | Battle Royal (tapez b)");
-            string mode = new string(Console.ReadLine());
+            // Create a list of characters
+            var numberOfFighters = ConsoleInterraction.GetNumberOfFighters();
+            List<Character> listOfCharacter = UtilsCharacters.GetAListOfRandomCharacter(numberOfFighters);
+            List<Character> listOfLosingCharacter = new List<Character>() {};
+            var round = 1;
 
-            if (mode == "d")
+            // While until only one character is alive
+            do
             {
-                Console.WriteLine(FiggleFonts.Slant.Render("DUEL"));
-
-                var robot = new Robot();
-                var kamikaze = new Kamikaze();
-
-                var i = 1;
-                while (!robot.IsDead() && !kamikaze.IsDead())
-                {
-                    Console.WriteLine("***************************************");
-                    Console.WriteLine("*************** ROUND " + i + " ***************");
-                    Console.WriteLine("***************************************");
-                    robot.StartRound();
-                    kamikaze.StartRound();
-                    var jetInitiativeRobot = robot.JetAttack();
-                    var jetInitiativeKamikaze = kamikaze.JetAttack();
-                    if (robot.TotalAttackNumber > 0 || kamikaze.TotalAttackNumber > 0)
+                Console.WriteLine("\n***************************************");
+                Console.WriteLine("*************** ROUND " + round + " ***************");
+                Console.WriteLine("***************************************\n");
+                
+                // Sort the list of character by initiative
+                listOfCharacter = listOfCharacter.OrderByDescending(x => x.JetInitiative()).ToList();
+                
+                // Start round for all character
+                listOfCharacter.ForEach(x => x.StartRound());
+                
+                do {
+                    
+                    if (UtilsCharacters.CheckIfSomebodyDie(listOfCharacter))
                     {
-                        Console.WriteLine("▶️Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " +
-                                          (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
-                        Console.WriteLine("▶️Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack +
-                                          " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " +
-                                          jetInitiativeKamikaze + "\n");
-
-                        if (jetInitiativeRobot > jetInitiativeKamikaze)
-                        {
-                            Console.WriteLine("💥" + robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "." + "\n");
-                            robot.AttackSomeone(kamikaze);
-                        }
-                        else
-                        {
-                            Console.WriteLine("💥" + kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "." + "\n");
-                            kamikaze.AttackSomeone(robot);
-                        }
-                        
-                        Console.WriteLine("🫀Robot: " + (robot.CurrentLife >= 0 ? robot.CurrentLife : 0));
-                        Console.WriteLine("🫀Kamikaze: " + (kamikaze.CurrentLife >= 0 ? kamikaze.CurrentLife : 0) + "\n");
+                        var allDeadCharacter = listOfCharacter.FindAll(x=> x.IsDead());
+                        allDeadCharacter.ForEach(x => listOfLosingCharacter.Add(x));
+                        listOfCharacter.RemoveAll(x => x.IsDead());
+                        ConsoleInterraction.ShowAllDeadCharacter(allDeadCharacter);
+                        UtilsCharacters.CharognardEatDeadBody(allDeadCharacter, listOfCharacter);
+                        continue;
                     }
-                    i++;
+                    
+                    // Find the first character who can attack
+                    var character = listOfCharacter.Find(x => x.CurrentAttackNumber > 0);
+                    character.AttackSomeone(listOfCharacter);
                 }
-            }
-            else if (mode == "b")
-            {
-                Console.WriteLine(FiggleFonts.Slant.Render("BATTLE ROYAL"));
-                // Instanciate two list of characters
-                List<Character> TeamA = new List<Character>()
-                {
-                    new Berserker(),
-                    new Vampire(),
-                    new Zombie(),
-                    new Gardien(),
-                    new Guerrier()
-                };
-                List<Character> TeamB = new List<Character>()
-                {
-                    new Goule(),
-                    new Kamikaze(),
-                    new Liche(),
-                    new Pretre(),
-                    new Robot()
-                };
-                List<Character> CopyTeamA = new List<Character>();
+                while (UtilsCharacters.SomebodyCanAttack(listOfCharacter) && listOfCharacter.Count > 1) ;
 
-                // Make initiave Jet
-                var JetInitiativeA = TeamA[UtilsCharacters.getRandomIndex(TeamA)].JetAttack();
-                var JetInitiativeB = TeamB[UtilsCharacters.getRandomIndex(TeamB)].JetAttack();
+                Console.WriteLine("\nRésumé du round");
+                ConsoleInterraction.ResumeOfAllCharacter(listOfCharacter);
+                Console.WriteLine("Press any key to continue to the next round");
+                Console.ReadKey();
+                round++;
+            } while(listOfCharacter.Count > 1);
 
-                if (JetInitiativeA > JetInitiativeB)
-                {
-                    CopyTeamA = TeamA;
-                    TeamA = TeamB;
-                    TeamB = CopyTeamA;
-                }
-
-                var round = 0;
-                do
-                {
-                    // Team A attack
-                    foreach (var character in TeamA)
-                    {
-                        // TeamA attack random character in teamB
-                        var randomIndex = UtilsCharacters.getRandomIndex(TeamA);
-                        character.AttackCharacter(TeamB[randomIndex]);
-                    }
-
-                    // Team B attack
-                    foreach (var character in TeamB)
-                    {
-                        // TeamB attack random character in TeamB
-                        var randomIndex = UtilsCharacters.getRandomIndex(TeamB);
-                        character.AttackCharacter(TeamA[randomIndex]);
-                    }
-
-                    round++;
-                } while (UtilsCharacters.checkSomebodyAlive(TeamA) || UtilsCharacters.checkSomebodyAlive(TeamB));
-
-
-                if (UtilsCharacters.checkSomebodyAlive(TeamA))
-                {
-                    Console.WriteLine("Team A win");
-                }
-                else
-                {
-                    Console.WriteLine("Team B win");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Fin");
-            }
-        }
-
-        private void getStats(Character character)
-        {
-            Console.WriteLine("📊Stats " + character.GetType().Name + " :");
-            Console.WriteLine("🫀" + (character.CurrentLife >= 0 ? character.CurrentLife : 0));
+            ConsoleInterraction.ShowLosingClassement(listOfLosingCharacter);
+            Console.WriteLine("The winner is : " + listOfCharacter[0].GetType().Name);
         }
     }
-}

@@ -1,49 +1,91 @@
-namespace Utils;
+namespace Function;
+
 using Characters;
 
 public static class UtilsCharacters
 {
-
-    /// <summary>Ask for a number of character by team</summary>
-    public static int ChooseNumber()
+    public static bool CheckIfSomebodyDie(List<Character> listOfCharacter)
     {
-        Console.Write("Choose number of characters for our team");
-        try
+        foreach (var character in listOfCharacter)
         {
-            int number = int.Parse(Console.ReadLine());
-            if (number <= 0)
-                throw new Exception("Choose a positive number");
-
-            return number;
-        }
-        catch (Exception)
-        {
-            Console.Write("Please choose a positive number");
-            ChooseNumber();
-            return 3; // Used to hide error on return type function
-        }
-    }
-
-    public static List<Character> ChooseCharacter()
-    {
-        List<Character> ListOfCharacter = new List<Character>();
-        // Ask to the user the character he wants
-        return ListOfCharacter;
-    }
-
-    public static bool checkSomebodyAlive(List<Character> team) {
-        for(int i = 0; i < team.Count; i++)
-            if(!team[i].IsDead()) 
+            if (character.IsDead())
+            {
                 return true;
+            }
+        }
+
         return false;
     }
 
-    /// <summary>
-    ///  Return a random index of a list to choose a character to attack
-    /// </summary>
-    public static int getRandomIndex(List<Character> team)
+    public static Character RandomCharacter()
     {
-        Random rnd = new Random();
-        return rnd.Next(1, team.Count);
+        var rnd = new Random();
+        var random = rnd.Next(1, 11);
+        switch (random)
+        {
+            case 1:
+                return new Berserker();
+            case 2:
+                return new Gardien();
+            case 3:
+                return new Goule();
+            case 4:
+                return new Guerrier();
+            case 5:
+                return new Kamikaze();
+            case 6:
+                return new Liche();
+            case 7:
+                return new Pretre();
+            case 8:
+                return new Robot();
+            case 9:
+                return new Vampire();
+            case 10:
+                return new Zombie();
+            default:
+                return new Berserker();
+        }
+    }
+
+    public static List<Character> GetAListOfRandomCharacter(int number)
+    {
+        List<Character> ListOfCharacter = new();
+        for (var i = 0; i < number; i++)
+        {
+            ListOfCharacter.Add(RandomCharacter());
+        }
+
+        return ListOfCharacter;
+    }
+
+    public static Character GetRandomCharacterInList(List<Character> listOfCharacter)
+    {
+        return listOfCharacter[new Random().Next(0, listOfCharacter.Count)];
+    }
+
+    public static bool SomebodyCanAttack(List<Character> listOfCharacter)
+    {
+        foreach (var character in listOfCharacter)
+        {
+            if (character.CanAttack())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void CharognardEatDeadBody(List<Character> allDeadCharacter, List<Character> listOfCharacter)
+    {
+        listOfCharacter.FindAll(x => x is Charognard).ForEach(charognard =>
+        {
+            allDeadCharacter.ForEach(deadCharacter =>
+            {
+                Console.WriteLine($"\n{charognard.GetType().Name} mange le cadavre de {deadCharacter.GetType().Name}");
+                ((Charognard)charognard).EatDeadCharacter();
+            });
+        });
     }
 }
