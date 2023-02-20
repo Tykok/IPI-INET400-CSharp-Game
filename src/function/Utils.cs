@@ -1,23 +1,26 @@
 namespace Function;
+
 using Characters;
 
 public static class UtilsCharacters
 {
-
     public static bool CheckIfSomebodyDie(List<Character> listOfCharacter)
     {
         foreach (var character in listOfCharacter)
         {
             if (character.IsDead())
+            {
                 return true;
+            }
         }
+
         return false;
     }
 
     public static Character RandomCharacter()
     {
-        Random rnd = new Random();
-        int random = rnd.Next(1, 11);
+        var rnd = new Random();
+        var random = rnd.Next(1, 11);
         switch (random)
         {
             case 1:
@@ -44,16 +47,45 @@ public static class UtilsCharacters
                 return new Berserker();
         }
     }
-    
+
     public static List<Character> GetAListOfRandomCharacter(int number)
     {
-        List<Character> ListOfCharacter = new List<Character>();
-        for(int i = 0; i < number; i++)
+        List<Character> ListOfCharacter = new();
+        for (var i = 0; i < number; i++)
         {
             ListOfCharacter.Add(RandomCharacter());
         }
+
         return ListOfCharacter;
     }
 
-    public static Character GetRandomCharacterInList(List<Character> listOfCharacter) =>  listOfCharacter[new Random().Next(0, listOfCharacter.Count)];
+    public static Character GetRandomCharacterInList(List<Character> listOfCharacter)
+    {
+        return listOfCharacter[new Random().Next(0, listOfCharacter.Count)];
+    }
+
+    public static bool SomebodyCanAttack(List<Character> listOfCharacter)
+    {
+        foreach (var character in listOfCharacter)
+        {
+            if (character.CanAttack())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void CharognardEatDeadBody(List<Character> allDeadCharacter, List<Character> listOfCharacter)
+    {
+        listOfCharacter.FindAll(x => x is Charognard).ForEach(charognard =>
+        {
+            allDeadCharacter.ForEach(deadCharacter =>
+            {
+                Console.WriteLine($"\n{charognard.GetType().Name} mange le cadavre de {deadCharacter.GetType().Name}");
+                ((Charognard)charognard).EatDeadCharacter();
+            });
+        });
+    }
 }

@@ -18,14 +18,14 @@ class Program
                 Console.WriteLine("\n***************************************");
                 Console.WriteLine("*************** ROUND " + round + " ***************");
                 Console.WriteLine("***************************************\n");
+                
+                // Sort the list of character by initiative
                 listOfCharacter = listOfCharacter.OrderByDescending(x => x.JetInitiative()).ToList();
                 
                 // Start round for all character
                 listOfCharacter.ForEach(x => x.StartRound());
                 
-                for (int i = 0; i < listOfCharacter.Count; i++)
-                {
-                    var character = listOfCharacter[i];
+                do {
                     
                     if (UtilsCharacters.CheckIfSomebodyDie(listOfCharacter))
                     {
@@ -33,14 +33,20 @@ class Program
                         allDeadCharacter.ForEach(x => listOfLosingCharacter.Add(x));
                         listOfCharacter.RemoveAll(x => x.IsDead());
                         ConsoleInterraction.ShowAllDeadCharacter(allDeadCharacter);
+                        UtilsCharacters.CharognardEatDeadBody(allDeadCharacter, listOfCharacter);
                         continue;
                     }
                     
+                    // Find the first character who can attack
+                    var character = listOfCharacter.Find(x => x.CurrentAttackNumber > 0);
                     character.AttackSomeone(listOfCharacter);
                 }
+                while (UtilsCharacters.SomebodyCanAttack(listOfCharacter) && listOfCharacter.Count > 1) ;
 
                 Console.WriteLine("\nRésumé du round");
                 ConsoleInterraction.ResumeOfAllCharacter(listOfCharacter);
+                Console.WriteLine("Press any key to continue to the next round");
+                Console.ReadKey();
                 round++;
             } while(listOfCharacter.Count > 1);
 

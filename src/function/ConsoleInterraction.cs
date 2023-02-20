@@ -3,6 +3,7 @@ using Characters;
 using Figgle;
 
 namespace Function;
+
 public class ConsoleInterraction
 {
     public static int GetNumberOfFighters()
@@ -10,10 +11,10 @@ public class ConsoleInterraction
         Console.WriteLine(FiggleFonts.Slant.Render("Console Battle"));
         Console.WriteLine("Veuillez sélectionner un mode de jeu...");
         Console.WriteLine("Duel (tapez d) | Battle Royal (tapez b)");
-        string mode = new string(Console.ReadLine());
-        int numberOfFighters = 0;
-        
-        if(mode == "d")
+        var mode = new string(Console.ReadLine());
+        var numberOfFighters = 0;
+
+        if (mode == "d")
         {
             numberOfFighters = 2;
             ShowInFiggleFonts("DUEL");
@@ -26,12 +27,12 @@ public class ConsoleInterraction
 
         return numberOfFighters;
     }
-    
+
     public static void ShowInFiggleFonts(string text)
     {
         Console.WriteLine(FiggleFonts.Slant.Render(text));
     }
-    
+
     public static int ChooseNumberOfFighters()
 
     {
@@ -42,21 +43,25 @@ public class ConsoleInterraction
             try
             {
                 numberOfFighters = int.Parse(Console.ReadLine());
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("Veuillez entrer un nombre positif entier");
                 numberOfFighters = 0;
             }
         } while (numberOfFighters <= 0);
+
         return numberOfFighters;
     }
-    
+
     public static void ShowAllDeadCharacter(List<Character> listOfCharacter)
     {
         Console.WriteLine("\nMort(s) :");
         foreach (var character in listOfCharacter)
+        {
             Console.WriteLine(character.GetType().Name + " est mort");
-        
+        }
+
         Console.WriteLine();
     }
 
@@ -74,6 +79,8 @@ public class ConsoleInterraction
     {
         Console.WriteLine("Survivant du round :");
         foreach (var character in listOfCharacter)
+        {
             Console.WriteLine(character);
+        }
     }
 }
