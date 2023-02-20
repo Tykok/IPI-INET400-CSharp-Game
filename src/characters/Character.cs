@@ -56,7 +56,7 @@ public abstract class Character
     }
 
     /// <summary>Check if the character is actually dead</summary>
-    public virtual bool IsDead() => CurrentLife <= 0;
+    public bool IsDead() => CurrentLife <= 0;
 
 
     public virtual int Jet() => new Random().Next(1, 101);
@@ -102,20 +102,26 @@ public abstract class Character
     }
     
     /// <summary>Return a string who describe the character</summary>
-    public virtual string ToString()
+    public override string ToString()
     {
-        return "Attack: " + Attack + " Defense: " + Defense + " Initiative: " + Initiative + " Damages: " + Damages +
-               " MaximumLife: " + MaximumLife + " CurrentLife: " + CurrentLife + " CurrentAttackNumber: " +
-               CurrentAttackNumber + " TotalAttackNumber: " + TotalAttackNumber;
+        return "Type: " + GetType().Name + "\n"
+               + "Attack: " + Attack + "\n"
+               + "Defense: " + Defense + "\n"
+               + "Initiative: " + Initiative + "\n"
+               + "Damages: " + Damages + "\n"
+               + "CurrentLife: " + CurrentLife + "\n"
+               + "CurrentAttackNumber: " + CurrentAttackNumber + "\n"
+               + "TotalAttackNumber: " + TotalAttackNumber + "\n";
     }
     
     protected virtual Character ChooseWhoAttack(List<Character> listOfCharacter)
     {
+        var copyOfList = new List<Character>(listOfCharacter);
         // Remove us from list 
-        listOfCharacter.Remove(this);
+        copyOfList.Remove(this);
         
         // Return a random character
-        var target = UtilsCharacters.GetRandomCharacterInList(listOfCharacter);
+        var target = UtilsCharacters.GetRandomCharacterInList(copyOfList);
         return target;
     }
 
@@ -148,10 +154,7 @@ public abstract class Character
     protected virtual void MakeDamage(Character target, int attackMargin)
     {
         var newCurrentLife = target.CurrentLife - Weakness(target, attackMargin / 100);
-        if (newCurrentLife < 0)
-            target.CurrentLife = newCurrentLife;
-        else
-            target.CurrentLife = newCurrentLife;
+        target.CurrentLife = (newCurrentLife < 0 ?  0 : newCurrentLife);
         
         CurrentAttackNumber--;
         Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100 + "\n");
@@ -164,10 +167,8 @@ public abstract class Character
         if (target.CurrentAttackNumber > 0)
         {
             var newCurrentLife = target.CurrentLife - Weakness(this, attackMargin );
-            if (newCurrentLife < 0)
-                target.CurrentLife = newCurrentLife;
-            else
-                target.CurrentLife = newCurrentLife;
+            target.CurrentLife = (newCurrentLife < 0 ? 0 : newCurrentLife);
+            
             CurrentAttackNumber--;
             target.CurrentAttackNumber--;
             Console.WriteLine("🔥Bonus de contre-attaque: " + attackMargin);

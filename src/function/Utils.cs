@@ -3,6 +3,17 @@ using Characters;
 
 public static class UtilsCharacters
 {
+
+    public static bool CheckIfSomebodyDie(List<Character> listOfCharacter)
+    {
+        foreach (var character in listOfCharacter)
+        {
+            if (character.IsDead())
+                return true;
+        }
+        return false;
+    }
+
     public static Character RandomCharacter()
     {
         Random rnd = new Random();
@@ -42,13 +53,6 @@ public static class UtilsCharacters
             ListOfCharacter.Add(RandomCharacter());
         }
         return ListOfCharacter;
-    }
-    
-    public static List<Character> OrderByInitiative(List<Character> listOfCharacter)
-    {
-        List<Character> listOfCharacterOrderByInitiative = new List<Character>();
-        listOfCharacterOrderByInitiative = listOfCharacter.OrderBy(x => x.JetInitiative()).ToList();
-        return listOfCharacterOrderByInitiative;
     }
 
     public static Character GetRandomCharacterInList(List<Character> listOfCharacter) =>  listOfCharacter[new Random().Next(0, listOfCharacter.Count)];
