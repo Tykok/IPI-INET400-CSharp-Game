@@ -115,10 +115,13 @@ public abstract class Character
         Console.WriteLine(" jet de Defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense + "\n");
         var attackMargin = attackLevel - targetDefense;
         
+        Console.WriteLine("💥Marge d'attaque: " + attackMargin + "\n");
+        
         // Check if the target can counter
-        if (targetDefense > attackLevel)
+        if (attackMargin <= 0)
         {
-            CounterDamage(target, attackMargin * -1);
+            Console.WriteLine(target.GetType().Name + " contre-attaque " + GetType().Name + "!" + "\n");
+            CounterDamage(this, attackMargin * -1);
             return attackMargin;
         }
         
@@ -131,6 +134,7 @@ public abstract class Character
     {
         target.CurrentLife -= Weakness(target, attackMargin / 100);
         CurrentAttackNumber--;
+        Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100);
     }
     
     /// <summary>Used to make counter damage to another character</summary>
@@ -139,9 +143,8 @@ public abstract class Character
         CurrentLife -= Weakness(this, attackMargin);
         CurrentAttackNumber--;
         target.CurrentAttackNumber--;
-        Console.WriteLine("💥Marge d'attaque: " + attackMargin);
-        Console.WriteLine("💥🔁Bonus de contre-attaque: " + attackMargin * -1);
-        Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100);
+        Console.WriteLine("💥🔁Bonus de contre-attaque: " + attackMargin);
+        Console.WriteLine("🩸Dégats subis par " + GetType().Name + ": " + attackMargin);
     }
 
     /// <summary>Double or not the damage given to the target</summary>

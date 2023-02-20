@@ -19,18 +19,9 @@ namespace IPI_INET400_CSharp_Game
 
                 var robot = new Robot();
                 var kamikaze = new Kamikaze();
-                
-                Console.WriteLine("ROBOT CURRENT LIFE || " + robot.CurrentLife + " || " + robot.IsDead());
-                Console.WriteLine("KAMIKAZE CURRENT LIFE || " + kamikaze.CurrentLife + " || " + kamikaze.IsDead());
-                Console.WriteLine("CONDITION " + (!robot.IsDead() || !kamikaze.IsDead()));
-                
-                /*var jetAttackRobot = robot.JetAttack();
-                var jetDefenseRobot = robot.JetDefense();
-                var jetAttackKamikaze = kamikaze.JetAttack();
-                var jetDefenseKamikaze = kamikaze.JetDefense();*/
 
                 var i = 1;
-                while ( i < 3)
+                while (!robot.IsDead() && !kamikaze.IsDead())
                 {
                     Console.WriteLine("********* ROUND " + i + " *********");
                     robot.StartRound();
@@ -39,27 +30,30 @@ namespace IPI_INET400_CSharp_Game
                     var jetInitiativeKamikaze = kamikaze.JetAttack();
                     if (robot.TotalAttackNumber > 0 || kamikaze.TotalAttackNumber > 0)
                     {
-                        Console.WriteLine("ROBOT ATTACK : " + robot.Attack);
-                        Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " + (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
-                        Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack + " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " + jetInitiativeKamikaze + "\n");
+                        Console.WriteLine("Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " +
+                                          (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
+                        Console.WriteLine("Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack +
+                                          " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " +
+                                          jetInitiativeKamikaze + "\n");
 
                         if (jetInitiativeRobot > jetInitiativeKamikaze)
                         {
-                            Console.WriteLine(robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "."  + "\n");
-                            /*if (robot.MarginAttack(kamikaze) > 0)
-                            {
-                                robot.AttackSomeone(kamikaze);
-                            }*/
+                            Console.WriteLine(robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "." +
+                                              "\n");
+                            robot.AttackSomeone(kamikaze);
                         }
                         else
                         {
-                            Console.WriteLine(kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "."  + "\n");
-                            if (kamikaze.MarginAttack(robot) > 0)
-                            {
-                                kamikaze.AttackSomeone(robot);
-                            }
+                            Console.WriteLine(kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "." +
+                                              "\n");
+                            kamikaze.AttackSomeone(robot);
                         }
+                        
+                        
+                        Console.WriteLine("🫀Robot: " + (robot.CurrentLife >= 0 ? robot.CurrentLife : 0));
+                        Console.WriteLine("🫀Kamikaze: " + (kamikaze.CurrentLife >= 0 ? kamikaze.CurrentLife : 0));
                     }
+
                     i++;
                 }
             }
@@ -137,7 +131,7 @@ namespace IPI_INET400_CSharp_Game
         private void getStats(Character character)
         {
             Console.WriteLine("📊Stats " + character.GetType().Name + " :");
-            Console.WriteLine("🫀" + character.CurrentLife);
+            Console.WriteLine("🫀" + (character.CurrentLife >= 0 ? character.CurrentLife : 0));
         }
     }
 }
