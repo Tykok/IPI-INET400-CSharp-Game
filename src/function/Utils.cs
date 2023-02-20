@@ -1,49 +1,55 @@
-namespace Utils;
+namespace Function;
 using Characters;
 
 public static class UtilsCharacters
 {
-
-    /// <summary>Ask for a number of character by team</summary>
-    public static int ChooseNumber()
-    {
-        Console.Write("Choose number of characters for our team");
-        try
-        {
-            int number = int.Parse(Console.ReadLine());
-            if (number <= 0)
-                throw new Exception("Choose a positive number");
-
-            return number;
-        }
-        catch (Exception)
-        {
-            Console.Write("Please choose a positive number");
-            ChooseNumber();
-            return 3; // Used to hide error on return type function
-        }
-    }
-
-    public static List<Character> ChooseCharacter()
-    {
-        List<Character> ListOfCharacter = new List<Character>();
-        // Ask to the user the character he wants
-        return ListOfCharacter;
-    }
-
-    public static bool checkSomebodyAlive(List<Character> team) {
-        for(int i = 0; i < team.Count; i++)
-            if(!team[i].IsDead()) 
-                return true;
-        return false;
-    }
-
-    /// <summary>
-    ///  Return a random index of a list to choose a character to attack
-    /// </summary>
-    public static int getRandomIndex(List<Character> team)
+    public static Character RandomCharacter()
     {
         Random rnd = new Random();
-        return rnd.Next(1, team.Count);
+        int random = rnd.Next(1, 11);
+        switch (random)
+        {
+            case 1:
+                return new Berserker();
+            case 2:
+                return new Gardien();
+            case 3:
+                return new Goule();
+            case 4:
+                return new Guerrier();
+            case 5:
+                return new Kamikaze();
+            case 6:
+                return new Liche();
+            case 7:
+                return new Pretre();
+            case 8:
+                return new Robot();
+            case 9:
+                return new Vampire();
+            case 10:
+                return new Zombie();
+            default:
+                return new Berserker();
+        }
     }
+    
+    public static List<Character> GetAListOfRandomCharacter(int number)
+    {
+        List<Character> ListOfCharacter = new List<Character>();
+        for(int i = 0; i < number; i++)
+        {
+            ListOfCharacter.Add(RandomCharacter());
+        }
+        return ListOfCharacter;
+    }
+    
+    public static List<Character> OrderByInitiative(List<Character> listOfCharacter)
+    {
+        List<Character> listOfCharacterOrderByInitiative = new List<Character>();
+        listOfCharacterOrderByInitiative = listOfCharacter.OrderBy(x => x.JetInitiative()).ToList();
+        return listOfCharacterOrderByInitiative;
+    }
+
+    public static Character GetRandomCharacterInList(List<Character> listOfCharacter) =>  listOfCharacter[new Random().Next(0, listOfCharacter.Count)];
 }

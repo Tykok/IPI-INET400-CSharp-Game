@@ -1,3 +1,4 @@
+using Function;
 using Main.enumeration;
 namespace Characters;
 
@@ -14,13 +15,13 @@ public abstract class Character
     public int Initiative;
     public int Damages;
     public int MaximumLife;
-    
-    
+
+
     /// <summary>
     /// The current life of the character of the current round
     /// </summary>
     public int CurrentLife;
-    
+
     /// <summary>
     /// Define the number of attack of the current round
     /// </summary>
@@ -59,6 +60,13 @@ public abstract class Character
 
 
     public virtual int Jet() => new Random().Next(1, 101);
+
+    public int JetInitiative()
+    {
+        var jetInitiative = Initiative + Jet();
+        Console.WriteLine("▶️Jet d'intiative " + GetType().Name + ": " + jetInitiative);
+        return jetInitiative;
+    }
     
     /// <summary>Return the amount of the character</summary>
     public virtual int JetAttack()
@@ -101,20 +109,26 @@ public abstract class Character
                CurrentAttackNumber + " TotalAttackNumber: " + TotalAttackNumber;
     }
     
-    /// <summary>
-    /// Return an Integer who indicate the attack margin on the target.
-    /// This Integer can be negative if the target can counter the attack, or positive if the attack is successful.
-    /// </summary>
-    public virtual int AttackSomeone(Character target)
+    protected virtual Character ChooseWhoAttack(List<Character> listOfCharacter)
     {
+        // Remove us from list 
+        listOfCharacter.Remove(this);
         
+        // Return a random character
+        var target = UtilsCharacters.GetRandomCharacterInList(listOfCharacter);
+        return target;
+    }
+
+    public void AttackSomeone(List<Character> listOfCharacter)
+    {
+        var target = ChooseWhoAttack(listOfCharacter);
         // Make two Jet for attack and defense
         var attackLevel = JetAttack();
-        Console.WriteLine("🗡️jet d'attaque de " + GetType().Name + ": " + (attackLevel - Attack) + " + " + Attack + " = " + attackLevel);
         var targetDefense = target.JetDefense();
-        Console.WriteLine("🛡jet de defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense);
         var attackMargin = attackLevel - targetDefense;
         
+        Console.WriteLine("🗡️jet d'attaque de " + GetType().Name + ": " + (attackLevel - Attack) + " + " + Attack + " = " + attackLevel);
+        Console.WriteLine("🛡jet de defense de " + target.GetType().Name + ": " + (targetDefense - Defense) + " + " + Defense + " = " + targetDefense);
         Console.WriteLine("Marge d'attaque: " + attackMargin + "\n");
         
         // Check if the target can counter
@@ -122,17 +136,23 @@ public abstract class Character
         {
             Console.WriteLine("💥🔁" + target.GetType().Name + " contre-attaque " + GetType().Name + "!" + "\n");
             CounterDamage(this, attackMargin * -1);
-            return attackMargin;
         }
         
         MakeDamage(target, attackMargin);
-        return attackMargin;
+        
+        if(CurrentAttackNumber > 0)
+            AttackSomeone(listOfCharacter);
     }
 
     /// <summary>Used to make damage to another character</summary>
     protected virtual void MakeDamage(Character target, int attackMargin)
     {
-        target.CurrentLife -= Weakness(target, attackMargin / 100);
+        var newCurrentLife = target.CurrentLife - Weakness(target, attackMargin / 100);
+        if (newCurrentLife < 0)
+            target.CurrentLife = newCurrentLife;
+        else
+            target.CurrentLife = newCurrentLife;
+        
         CurrentAttackNumber--;
         Console.WriteLine("🩸Dégats subis par " + target.GetType().Name + ": " + attackMargin * Damages / 100 + "\n");
     }
@@ -140,11 +160,23 @@ public abstract class Character
     /// <summary>Used to make counter damage to another character</summary>
     protected virtual void CounterDamage(Character target, int attackMargin)
     {
-        CurrentLife -= Weakness(this, attackMargin);
-        CurrentAttackNumber--;
-        target.CurrentAttackNumber--;
-        Console.WriteLine("🔥Bonus de contre-attaque: " + attackMargin);
-        Console.WriteLine("🩸Dégats subis par " + GetType().Name + ": " + attackMargin);
+        // Check if the target can always attack
+        if (target.CurrentAttackNumber > 0)
+        {
+            var newCurrentLife = target.CurrentLife - Weakness(this, attackMargin );
+            if (newCurrentLife < 0)
+                target.CurrentLife = newCurrentLife;
+            else
+                target.CurrentLife = newCurrentLife;
+            CurrentAttackNumber--;
+            target.CurrentAttackNumber--;
+            Console.WriteLine("🔥Bonus de contre-attaque: " + attackMargin);
+            Console.WriteLine("🩸Dégats subis par " + GetType().Name + ": " + attackMargin);
+        }
+        else
+        {
+            Console.WriteLine("❌ La contre attaque a échoué !");
+        }
     }
 
     /// <summary>Double or not the damage given to the target</summary>
