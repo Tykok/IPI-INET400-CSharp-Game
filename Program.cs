@@ -8,36 +8,56 @@ namespace IPI_INET400_CSharp_Game
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(FiggleFonts.Ogre.Render("Console Battle"));
+            Console.WriteLine(FiggleFonts.Slant.Render("Console Battle"));
             Console.WriteLine("Veuillez sélectionner un mode de jeu...");
-            Console.WriteLine("Duel(tapez d) | Battle Royal (tapez b)");
+            Console.WriteLine("Duel (tapez d) | Battle Royal (tapez b)");
             string mode = new string(Console.ReadLine());
 
             if (mode == "d")
             {
-                Console.WriteLine("========== DUEL ==========");
+                Console.WriteLine(FiggleFonts.Slant.Render("DUEL"));
 
-                Character walle = new Robot();
-                Character momo = new Kamikaze();
+                var robot = new Robot();
+                var kamikaze = new Kamikaze();
 
-                var jetWalle = walle.JetAttack();
-                var jetMomo = momo.JetAttack();
-
-                Console.WriteLine("Jet d'intiative Wall-E: " + walle.Attack + " + " + (jetWalle - walle.Attack) + " = " + jetWalle);
-                Console.WriteLine("Jet d'intiative Momo: " + momo.Attack + " + " + (jetMomo - momo.Attack) + " = " + jetMomo);
-                Console.WriteLine("Marge d'attaque: " + (walle.Attack + jetWalle) + " - " + (momo.Attack + jetMomo) +
-                                  " = " + ((walle.Attack + jetWalle) - (momo.Attack + jetMomo)));
-
-                if (walle.Attack + jetWalle > momo.Attack + jetMomo)
+                var i = 1;
+                while (!robot.IsDead() && !kamikaze.IsDead())
                 {
-                    Console.WriteLine("Walle attaque Momo!");
-                    
+                    Console.WriteLine("***************************************");
+                    Console.WriteLine("*************** ROUND " + i + " ***************");
+                    Console.WriteLine("***************************************");
+                    robot.StartRound();
+                    kamikaze.StartRound();
+                    var jetInitiativeRobot = robot.JetAttack();
+                    var jetInitiativeKamikaze = kamikaze.JetAttack();
+                    if (robot.TotalAttackNumber > 0 || kamikaze.TotalAttackNumber > 0)
+                    {
+                        Console.WriteLine("▶️Jet d'intiative " + robot.GetType().Name + " : " + robot.Attack + " + " +
+                                          (robot.JetAttack() - robot.Attack) + " = " + jetInitiativeRobot);
+                        Console.WriteLine("▶️Jet d'intiative " + kamikaze.GetType().Name + " : " + kamikaze.Attack +
+                                          " + " + (kamikaze.JetAttack() - kamikaze.Attack) + " = " +
+                                          jetInitiativeKamikaze + "\n");
+
+                        if (jetInitiativeRobot > jetInitiativeKamikaze)
+                        {
+                            Console.WriteLine("💥" + robot.GetType().Name + " attaque " + kamikaze.GetType().Name + "." + "\n");
+                            robot.AttackSomeone(kamikaze);
+                        }
+                        else
+                        {
+                            Console.WriteLine("💥" + kamikaze.GetType().Name + " attaque " + robot.GetType().Name + "." + "\n");
+                            kamikaze.AttackSomeone(robot);
+                        }
+                        
+                        Console.WriteLine("🫀Robot: " + (robot.CurrentLife >= 0 ? robot.CurrentLife : 0));
+                        Console.WriteLine("🫀Kamikaze: " + (kamikaze.CurrentLife >= 0 ? kamikaze.CurrentLife : 0) + "\n");
+                    }
+                    i++;
                 }
-                
             }
             else if (mode == "b")
             {
-                Console.WriteLine("========== BATTLE ROYAL ==========");
+                Console.WriteLine(FiggleFonts.Slant.Render("BATTLE ROYAL"));
                 // Instanciate two list of characters
                 List<Character> TeamA = new List<Character>()
                 {
@@ -104,6 +124,12 @@ namespace IPI_INET400_CSharp_Game
             {
                 Console.WriteLine("Fin");
             }
+        }
+
+        private void getStats(Character character)
+        {
+            Console.WriteLine("📊Stats " + character.GetType().Name + " :");
+            Console.WriteLine("🫀" + (character.CurrentLife >= 0 ? character.CurrentLife : 0));
         }
     }
 }
